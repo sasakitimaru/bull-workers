@@ -1,0 +1,7 @@
+version: "3"
+services:
+  redis:
+    image: redis:7.0.15-alpine3.20
+    ports:
+      - "127.0.0.1:6379:6379"
+    user: "redis:redis"
