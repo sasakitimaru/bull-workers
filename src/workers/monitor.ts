@@ -2,8 +2,8 @@ import { Queue, QueueEvents, Worker } from "bullmq";
 
 export function listenQueueEvent(queue: Queue) {
   const queueEvent = new QueueEvents(queue.name);
-  queueEvent.on("active", (jobId) => {
-    console.log(`[${queue.name}] active job: ${jobId}`);
+  queueEvent.on("active", (job) => {
+    console.log(`[${queue.name}] active job: ${job.jobId}`);
   });
 
   queueEvent.on("waiting", () => {
@@ -22,25 +22,22 @@ export function listenQueueEvent(queue: Queue) {
 
 export function listenWorkerEvents(worker: Worker) {
   worker.on("completed", (job) => {
-    console.log(`[${worker.name}] completed job: ${job.returnvalue}`);
+    console.log(
+      `[${worker.name}][pid:${process.pid}] completed job: ${job.returnvalue}`
+    );
   });
 
   worker.on("failed", (_, error) => {
-    console.error(`[${worker.name}] failed job: ${error.message}`);
+    console.error(
+      `[${worker.name}][pid:${process.pid}] failed job: ${error.message}`
+    );
   });
 
-  process.on(
-    "SIGINT",
-    async (signal) => await gracefulShutdown(signal, worker)
-  );
-  process.on(
-    "SIGTERM",
-    async (signal) => await gracefulShutdown(signal, worker)
-  );
+  process.on("SIGINT", async (signal) => await gracefulShutdown(worker));
+  process.on("SIGTERM", async (signal) => await gracefulShutdown(worker));
 }
 
-async function gracefulShutdown(signal: string, worker: Worker) {
-  console.log(`received signal: ${signal}`);
+async function gracefulShutdown(worker: Worker) {
   await worker.close();
   process.exit(0);
 }

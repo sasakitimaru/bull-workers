@@ -1,0 +1,12 @@
+POST http://localhost:3000/message
+Content-Type: application/json
+
+{
+  "messages": [
+    { "message": "hello" },
+    { "message": "good morning!" },
+    { "message": "good afternoon!" },
+    { "message": "good evening!" },
+    { "message": "good night!" }
+  ]
+}

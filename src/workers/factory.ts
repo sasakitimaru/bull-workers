@@ -1,5 +1,6 @@
 import {
   BaseJobOptions,
+  Job,
   Processor,
   Queue,
   Worker,
@@ -12,17 +13,17 @@ const connection = {
   port: REDIS_PORT,
 };
 
-type QueueName = keyof QueueConfig;
+export type MessageQueueReq = { message: string };
+export type MessageQueueRes = string;
 
+type QueueName = keyof QueueConfig;
+type QueueItem<T, R> = {
+  data: T;
+  return: R;
+};
 type QueueConfig = {
-  "concurrent-queue": {
-    data: { message: string };
-    return: string;
-  };
-  "single-queue": {
-    data: { message: string };
-    return: string;
-  };
+  "concurrent-queue": QueueItem<MessageQueueReq, MessageQueueRes>;
+  "single-queue": QueueItem<MessageQueueReq, MessageQueueRes>;
 };
 
 type DataType<T extends QueueName> = QueueConfig[T]["data"];
@@ -36,6 +37,15 @@ export const createQueue = <T extends QueueName>(
     connection,
     defaultJobOptions,
   });
+};
+
+export const processorAdapter = <T extends QueueName>(
+  processor: Processor<DataType<T>, ReturnType<T>>
+) => {
+  return async (job: Job<DataType<T>>) => {
+    const result = await processor(job);
+    return result;
+  };
 };
 
 export const createWorker = <T extends QueueName>(
