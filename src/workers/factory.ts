@@ -15,8 +15,12 @@ const connection = {
 type QueueName = keyof QueueConfig;
 
 type QueueConfig = {
-  "some-queue": {
-    data: { id: number };
+  "concurrent-queue": {
+    data: { message: string };
+    return: string;
+  };
+  "single-queue": {
+    data: { message: string };
     return: string;
   };
 };

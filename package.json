@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start-queue": "node dist/queue.js",
+    "start-queue": "node dist/entry.js",
     "build": "tsc"
   },
   "keywords": [],
@@ -12,10 +12,12 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.13.0",
+    "@types/throng": "^5.0.7",
     "typescript": "^5.4.5"
   },
   "dependencies": {
     "bullmq": "^5.7.14",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "throng": "^5.0.0"
   }
 }

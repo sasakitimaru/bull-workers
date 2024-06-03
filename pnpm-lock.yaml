@@ -11,11 +11,17 @@ dependencies:
   dotenv:
     specifier: ^16.4.5
     version: 16.4.5
+  throng:
+    specifier: ^5.0.0
+    version: 5.0.0
 
 devDependencies:
   '@types/node':
     specifier: ^20.13.0
     version: 20.13.0
+  '@types/throng':
+    specifier: ^5.0.7
+    version: 5.0.7
   typescript:
     specifier: ^5.4.5
     version: 5.4.5
@@ -78,6 +84,10 @@ packages:
     resolution: {integrity: sha512-FM6AOb3khNkNIXPnHFDYaHerSv8uN22C91z098AnGccVu+Pcdhi+pNUFDi0iLmPIsVE0JBD0KVS7mzUYt4nRzQ==}
     dependencies:
       undici-types: 5.26.5
+    dev: true
+
+  /@types/throng@5.0.7:
+    resolution: {integrity: sha512-O8TBC55LPTOYPXak2Ft7meBksgHituuw49xx7gZy1+BcCO1tRGGD8Eqp2bFDFcLp0vKrsOg/Y077dmHjGiOmWQ==}
     dev: true
 
   /bullmq@5.7.14:
@@ -153,6 +163,10 @@ packages:
     resolution: {integrity: sha512-chi4NHZlZqZD18a0imDHnZPrDeBbTtVN7GXMwuGdRH9qotxAjYs3aVLKc7zNOG9eddR5Ksd8rvFEBc9SsggPpg==}
     dev: false
 
+  /lodash@4.17.21:
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+    dev: false
+
   /luxon@3.4.4:
     resolution: {integrity: sha512-zobTr7akeGHnv7eBOXcRgMeCP6+uyYsczwmeRCauvpvaAltgNyTbLH/+VaEAPUeWBT+1GuNmz4wC/6jtQzbbVA==}
     engines: {node: '>=12'}
@@ -215,6 +229,13 @@ packages:
 
   /standard-as-callback@2.1.0:
     resolution: {integrity: sha512-qoRRSyROncaz1z0mvYqIE4lCd9p2R90i6GxW3uZv5ucSu8tU7B5HXUP1gG8pVZsYNVaXjk8ClXHPttLyxAL48A==}
+    dev: false
+
+  /throng@5.0.0:
+    resolution: {integrity: sha512-nrq7+qQhn/DL8yW/wiwImTepfi6ynOCAe7moSwgoYN1F32yQMdBkuFII40oAkb3cDfaL6q5BIoFTDCHdMWQ8Pw==}
+    engines: {node: '>= 10'}
+    dependencies:
+      lodash: 4.17.21
     dev: false
 
   /tslib@2.6.2:
