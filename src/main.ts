@@ -5,11 +5,10 @@ import { MessageQueueReq } from "./queue/factory";
 const app = express();
 app.use(express.json());
 
-app.post("/message", async (req, res) => {
+app.post("/messages", async (req, res) => {
   try {
     const { messages }: { messages: MessageQueueReq[] } = req.body;
-    const messageArray = Array.isArray(messages) ? messages : [messages];
-    await addJobs(messageArray);
+    await addJobs(messages);
     res.status(200).send("Messages are added to the queue");
   } catch (error) {
     console.error("Error adding jobs to the queue:", error);
