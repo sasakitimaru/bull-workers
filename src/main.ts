@@ -1,6 +1,6 @@
 import express from "express";
-import { addJobs } from "./queue";
-import { MessageQueueReq } from "./workers/factory";
+import { addJobs } from "./queue/producers/messageProducer";
+import { MessageQueueReq } from "./queue/factory";
 
 const app = express();
 app.use(express.json());

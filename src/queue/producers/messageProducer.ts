@@ -1,8 +1,8 @@
-import { createQueue, MessageQueueReq } from "./workers/factory";
-import { listenQueueEvent } from "./workers/monitor";
+import { createQueue, MessageQueueReq, QueueName } from "../factory";
+import { listenQueueEvent } from "../listener";
 
-const concurrentQueue = createQueue("concurrent-queue");
-const singleQueue = createQueue("single-queue");
+const concurrentQueue = createQueue(QueueName.CONCURRENT_QUEUE);
+const singleQueue = createQueue(QueueName.SINGLE_QUEUE);
 
 export async function addJobs(messages: MessageQueueReq[]) {
   await Promise.all(

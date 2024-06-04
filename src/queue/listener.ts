@@ -1,7 +1,8 @@
 import { Queue, QueueEvents, Worker } from "bullmq";
+import { connection } from "../config";
 
 export function listenQueueEvent(queue: Queue) {
-  const queueEvent = new QueueEvents(queue.name);
+  const queueEvent = new QueueEvents(queue.name, { connection });
   queueEvent.on("active", (job) => {
     console.log(`[${queue.name}] active job: ${job.jobId}`);
   });
@@ -33,8 +34,8 @@ export function listenWorkerEvents(worker: Worker) {
     );
   });
 
-  process.on("SIGINT", async (signal) => await gracefulShutdown(worker));
-  process.on("SIGTERM", async (signal) => await gracefulShutdown(worker));
+  process.on("SIGINT", async () => await gracefulShutdown(worker));
+  process.on("SIGTERM", async () => await gracefulShutdown(worker));
 }
 
 async function gracefulShutdown(worker: Worker) {

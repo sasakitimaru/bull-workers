@@ -6,24 +6,22 @@ import {
   Worker,
   WorkerOptions,
 } from "bullmq";
-import { REDIS_HOST, REDIS_PORT } from "../env";
-
-const connection = {
-  host: REDIS_HOST,
-  port: REDIS_PORT,
-};
+import { connection } from "../config";
 
 export type MessageQueueReq = { message: string };
 export type MessageQueueRes = string;
 
-type QueueName = keyof QueueConfig;
+export enum QueueName {
+  CONCURRENT_QUEUE = "concurrent-queue",
+  SINGLE_QUEUE = "single-queue",
+}
 type QueueItem<T, R> = {
   data: T;
   return: R;
 };
 type QueueConfig = {
-  "concurrent-queue": QueueItem<MessageQueueReq, MessageQueueRes>;
-  "single-queue": QueueItem<MessageQueueReq, MessageQueueRes>;
+  [QueueName.CONCURRENT_QUEUE]: QueueItem<MessageQueueReq, MessageQueueRes>;
+  [QueueName.SINGLE_QUEUE]: QueueItem<MessageQueueReq, MessageQueueRes>;
 };
 
 type DataType<T extends QueueName> = QueueConfig[T]["data"];

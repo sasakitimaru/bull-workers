@@ -1,7 +1,36 @@
 version: "3"
 services:
+  server:
+    container_name: server
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev-server
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+
+  consumer:
+    container_name: consumer
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev-consumer
+    ports:
+      - "3001:3001"
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+
   redis:
+    container_name: redis
     image: redis:7.0.15-alpine3.20
     ports:
-      - "127.0.0.1:6379:6379"
+      - "6379:6379"
     user: "redis:redis"
