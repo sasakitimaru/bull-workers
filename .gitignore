@@ -1,3 +1,9 @@
+## nodejs
 **/node_modules/
 **/dist/
+
+## terraform
+**/**.tfvars
+
+## macOS
 .DS_Store
