@@ -1,17 +1,15 @@
-import { createQueue, MessageQueueReq, QueueName } from "../factory";
-import { listenQueueEvent } from "../listener";
+import { MessageQueueReq, Producer, QueueName } from "../factory";
 
-const concurrentQueue = createQueue(QueueName.CONCURRENT_QUEUE);
-const singleQueue = createQueue(QueueName.SINGLE_QUEUE);
+export async function enqueueMessages(messages: MessageQueueReq[]) {
+  const concurrentQueueProducer = new Producer(QueueName.CONCURRENT_QUEUE);
+  const singleQueueProducer = new Producer(QueueName.SINGLE_QUEUE);
+  concurrentQueueProducer.start();
+  singleQueueProducer.start();
 
-export async function addJobs(messages: MessageQueueReq[]) {
   await Promise.all(
     messages.map(async ({ message }) => {
-      concurrentQueue.add("message", { message });
-      singleQueue.add("message", { message });
+      concurrentQueueProducer.add("message", { message });
+      singleQueueProducer.add("message", { message });
     })
   );
-
-  listenQueueEvent(concurrentQueue);
-  listenQueueEvent(singleQueue);
 }

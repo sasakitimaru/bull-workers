@@ -1,5 +1,5 @@
 import express from "express";
-import { addJobs } from "./queue/producers/messageProducer";
+import { enqueueMessages } from "./queue/producers/messageProducer";
 import { MessageQueueReq } from "./queue/factory";
 
 const app = express();
@@ -8,7 +8,7 @@ app.use(express.json());
 app.post("/messages", async (req, res) => {
   try {
     const { messages }: { messages: MessageQueueReq[] } = req.body;
-    await addJobs(messages);
+    await enqueueMessages(messages);
     res.status(200).send("Messages are added to the queue");
   } catch (error) {
     console.error("Error adding jobs to the queue:", error);

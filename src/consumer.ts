@@ -1,9 +1,9 @@
 import throng from "throng";
 import os from "os";
-import { messageConsumer } from "./queue/consumers/messageConsumer";
+import { initiateMessageConsumers } from "./queue/consumers/messageConsumer";
 
 const count = os.cpus().length;
 void throng({
-  worker: messageConsumer,
+  worker: initiateMessageConsumers,
   count,
 });
